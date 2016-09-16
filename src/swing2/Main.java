@@ -1,9 +1,7 @@
 package swing2;
 
 import java.awt.Dimension;
-import java.awt.Toolkit;
 
-//from w w w . j  av a 2 s  .c o  m
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -11,7 +9,13 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+		System.out.println(args[0]);
+		if(args.length > 0)
+		{
+			Settings.APP_ROOT = args[0] + "/";
+			System.out.println("Settings.APP_ROOT has been set to : " + Settings.APP_ROOT );
+		}
+//		final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
 		SwingUtilities.invokeLater(new Runnable()
 		{
@@ -23,8 +27,8 @@ public class Main
 				frame.add(ip);
 
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setSize(SCREEN_SIZE);
-				frame.setUndecorated(true);
+				frame.setSize(new Dimension(1280, 1024));
+//				frame.setUndecorated(true);
 				frame.addKeyListener(ip);
 				frame.setVisible(true);
 				ip.start();

@@ -27,7 +27,8 @@ public class Misi extends Fighter
 		mMoves.put(Move.CROUCH_AND_BLOCK, new Sprite("MISI_CROUCH_AND_BLOCK", crouch_and_block));
 //		mMoves.put(Move.WIN, new Sprite("MISI_WIN", win));
 		mMoves.put(Move.TURN_BACK, new Sprite("MISI_TURN_BACK", turn_back));
-		mMoves.put(Move.WALK, new Sprite("MISI_WALK", walk));
+		mMoves.put(Move.WALK_LEFT, new Sprite("MISI_WALK", walk));
+		mMoves.put(Move.WALK_RIGHT, new Sprite("MISI_WALK", walk));
 		mMoves.put(Move.GOT_PUNCH, new Sprite("MISI_GOT_PUNCH", got_punch));
 		mMoves.put(Move.KICK, new Sprite("MISI_KICK", kick));
 		mMoves.put(Move.PUNCH, new Sprite("MISI_PUNCH", punch));
@@ -44,28 +45,28 @@ public class Misi extends Fighter
 	@Override
 	public void moveLeft()
 	{
-		horizontalOffset -= movement;
-		actualMove = Move.WALK;
+		setHorizontalOffset(getHorizontalOffset() - getMovement());
+		actualMove = Move.WALK_LEFT;
 	}
 
 	@Override
 	public void moveRight()
 	{
-		horizontalOffset += movement;
-		actualMove = Move.WALK;
+		setHorizontalOffset(getHorizontalOffset() + getMovement());
+		actualMove = Move.WALK_RIGHT;
 	}
 
 	@Override
 	public void moveJump()
 	{
-		verticalOffset -= movement;
+		setVerticalOffset(getVerticalOffset() - getMovement());
 		actualMove = Move.JUMP;
 	}
 
 	@Override
 	public void moveCrouch()
 	{
-		verticalOffset += movement;
+		setVerticalOffset(getVerticalOffset() + getMovement());
 		actualMove = Move.CROUCH;
 	}
 

@@ -13,7 +13,8 @@ public class Scorpion extends Fighter
 	public Scorpion()
 	{
 		mMoves.put(Move.STANDARD, new Sprite("SCORPION_STANDARD", standard));
-		mMoves.put(Move.WALK, new Sprite("SCORPION_STANDARD", standard));
+		mMoves.put(Move.WALK_LEFT, new Sprite("SCORPION_STANDARD", standard));
+		mMoves.put(Move.WALK_RIGHT, new Sprite("SCORPION_STANDARD", standard));
 		mMoves.put(Move.GOT_PUNCH, new Sprite("SCORPION_GOTPUNCH", gotPunch));
 	}
 
@@ -26,15 +27,15 @@ public class Scorpion extends Fighter
 	@Override
 	public void moveLeft()
 	{
-		horizontalOffset -= movement;
-		actualMove = Move.GOT_PUNCH;
+		setHorizontalOffset(getHorizontalOffset() - getMovement());
+		actualMove = Move.WALK_LEFT;
 	}
 
 	@Override
 	public void moveRight()
 	{
-		horizontalOffset += movement;
-		actualMove = Move.WALK;
+		setHorizontalOffset(getHorizontalOffset() + getMovement());
+		actualMove = Move.WALK_RIGHT;
 	}
 
 	@Override

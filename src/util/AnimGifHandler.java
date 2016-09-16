@@ -130,7 +130,7 @@ public class AnimGifHandler
 			for (int i = 0; i < images.length; i++)
 			{
 				BufferedImage bufferedImage = images[i];
-				File outFile = new File(toDir.getAbsolutePath() + "\\" + file.getName() + "_" + i + ".png");
+				File outFile = new File(toDir.getAbsolutePath() + "/" + file.getName() + "_" + i + ".png");
 				ImageIO.write(bufferedImage, "PNG", outFile);
 			}
 		}

@@ -15,17 +15,19 @@ public abstract class Fighter
 	{
 		mKeyMoves1.put(KeyEvent.VK_W, Move.JUMP);
 		mKeyMoves1.put(KeyEvent.VK_S, Move.CROUCH);
-		mKeyMoves1.put(KeyEvent.VK_A, Move.WALK);
-		mKeyMoves1.put(KeyEvent.VK_D, Move.WALK);
+		mKeyMoves1.put(KeyEvent.VK_A, Move.WALK_LEFT);
+		mKeyMoves1.put(KeyEvent.VK_D, Move.WALK_RIGHT);
 		mKeyMoves1.put(KeyEvent.VK_1, Move.PUNCH);
 		mKeyMoves1.put(KeyEvent.VK_2, Move.KICK);
+		mKeyMoves1.put(KeyEvent.VK_3, Move.BLOCK);
 
 		mKeyMoves2.put(KeyEvent.VK_UP, Move.JUMP);
 		mKeyMoves2.put(KeyEvent.VK_DOWN, Move.CROUCH);
-		mKeyMoves2.put(KeyEvent.VK_LEFT, Move.WALK);
-		mKeyMoves2.put(KeyEvent.VK_RIGHT, Move.WALK);
-		mKeyMoves2.put(KeyEvent.VK_INSERT, Move.PUNCH);
-		mKeyMoves2.put(KeyEvent.VK_END, Move.KICK);
+		mKeyMoves2.put(KeyEvent.VK_LEFT, Move.WALK_LEFT);
+		mKeyMoves2.put(KeyEvent.VK_RIGHT, Move.WALK_RIGHT);
+		mKeyMoves2.put(KeyEvent.VK_8, Move.PUNCH);
+		mKeyMoves2.put(KeyEvent.VK_9, Move.KICK);
+		mKeyMoves2.put(KeyEvent.VK_7, Move.BLOCK);
 	}
 	
 	Map<Move, Sprite> mMoves = new HashMap<>();
@@ -53,6 +55,26 @@ public abstract class Fighter
 		else if (move == Move.STANDARD)
 		{
 			moveStandard();
+		}
+		else if (move == Move.JUMP)
+		{
+			moveJump();
+		}
+		else if (move == Move.WALK_LEFT)
+		{
+			moveLeft();
+		}
+		else if (move == Move.WALK_RIGHT)
+		{
+			moveRight();
+		}
+		else if (move == Move.PUNCH)
+		{
+			hitPunch();
+		}
+		else if (move == Move.KICK)
+		{
+			hitKick();
 		}
 	}
 	
@@ -100,6 +122,34 @@ public abstract class Fighter
 		}
 	}
 
+	public int move(boolean buttonPressed, int playerImageIndex)
+	{
+		BufferedImage[] images1 = mMoves.get(actualMove).getImages();
+		Polygon[] polygons1 = mMoves.get(actualMove).getPolygons();
+		if (actualMove != Move.STANDARD)
+		{
+			if(buttonPressed && playerImageIndex < images1.length - 1)
+			{
+				playerImageIndex++;
+			}
+			else if(!buttonPressed && playerImageIndex > 0)
+			{
+				playerImageIndex--;
+			}
+			if (playerImageIndex == 0)
+			{
+				actualMove = Move.STANDARD;
+			}
+		}
+		else
+		{
+			playerImageIndex = (playerImageIndex + 1) % images1.length;
+		}
+		biShownImage = images1[playerImageIndex];
+		pShownPolygon = polygons1[playerImageIndex];
+		return playerImageIndex;
+	}
+	
 	public int getMovement()
 	{
 		return movement;

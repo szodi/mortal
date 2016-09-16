@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 {
 	private static final long serialVersionUID = -729852966251240571L;
 
-	Image image = Toolkit.getDefaultToolkit().createImage(this.getClass().getResource("/images/P1080098.JPG"));
+	Image image = Toolkit.getDefaultToolkit().createImage(this.getClass().getResource("/images/ccbg_fix.jpg"));
 
 	Fighter[] fighters;
 
@@ -23,6 +23,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 
 	int player1ImageIndex = 0;
 	int player2ImageIndex = 0;
+	
+	boolean pressed1 = false;
+	boolean pressed2 = false;
 
 	public GamePanel()
 	{
@@ -31,8 +34,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 
 	public void start()
 	{
-		fighters[0] = new Szodi();
-		fighters[1] = new Misi();
+		fighters[0] = new Misi();
+		fighters[0].setVerticalOffset(450);
+		fighters[0].setHorizontalOffset(600);
+		fighters[1] = new Mate();
+		fighters[1].setVerticalOffset(450);
 		fighters[1].setHorizontalOffset(400);
 		new Thread(this).start();
 	}
@@ -84,74 +90,24 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-//		if (Fighter.mKeyMoves1.containsKey(e.getKeyCode()))
-//		{
-//			Move move = Fighter.mKeyMoves1.get(e.getKeyCode());
-//			fighters[0].doMove(move);
-//		}
-//		else if (Fighter.mKeyMoves2.containsKey(e.getKeyCode()))
-//		{
-//			
-//		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT && fighters[0].getHorizontalOffset() > 0)
+		if (Fighter.mKeyMoves1.containsKey(e.getKeyCode()) && Fighter.mKeyMoves1.get(e.getKeyCode()) != fighters[0].getActualMove())
 		{
-			fighters[0].setHorizontalOffset(fighters[0].getHorizontalOffset() - fighters[0].getMovement());
-			fighters[0].setActualMove(Move.GOT_PUNCH);
+			Move move = Fighter.mKeyMoves1.get(e.getKeyCode());
+			fighters[0].doMove(move);
+			pressed1 = true;
+			player1ImageIndex = 0;
 		}
-		else if (e.getKeyCode() == KeyEvent.VK_RIGHT && fighters[0].getHorizontalOffset() < 1000)
+		else if (Fighter.mKeyMoves2.containsKey(e.getKeyCode()) && Fighter.mKeyMoves2.get(e.getKeyCode()) != fighters[1].getActualMove())
 		{
-			fighters[0].setHorizontalOffset(fighters[0].getHorizontalOffset() + fighters[0].getMovement());
-			fighters[0].setActualMove(Move.WALK);
+			Move move = Fighter.mKeyMoves2.get(e.getKeyCode());
+			fighters[1].doMove(move);
+			pressed2 = true;
+			player2ImageIndex = 0;
 		}
-		else if (e.getKeyCode() == KeyEvent.VK_UP && fighters[0].getVerticalOffset() > 0)
+		else if (e.getKeyCode() == KeyEvent.VK_M)
 		{
-			fighters[0].setVerticalOffset(fighters[0].getVerticalOffset() - fighters[0].getMovement());
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_DOWN && fighters[0].getVerticalOffset() < 1000)
-		{
-			fighters[0].setActualMove(Move.CROUCH);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_7)
-		{
-			fighters[0].setActualMove(Move.BLOCK);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_8)
-		{
-			fighters[0].setActualMove(Move.KICK);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_9)
-		{
-			fighters[0].setActualMove(Move.PUNCH);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_A && fighters[0].getHorizontalOffset() > 0)
-		{
-			fighters[1].setHorizontalOffset(fighters[1].getHorizontalOffset() - fighters[1].getMovement());
-			fighters[1].setActualMove(Move.WALK);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_D && fighters[1].getHorizontalOffset() < 1000)
-		{
-			fighters[1].setHorizontalOffset(fighters[1].getHorizontalOffset() + fighters[1].getMovement());
-			fighters[1].setActualMove(Move.WALK);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_W && fighters[1].getVerticalOffset() > 0)
-		{
-			fighters[1].setVerticalOffset(fighters[1].getVerticalOffset() - fighters[1].getMovement());
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_S && fighters[1].getVerticalOffset() < 1000)
-		{
-			fighters[1].setActualMove(Move.CROUCH);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_1)
-		{
-			fighters[1].setActualMove(Move.KICK);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_2)
-		{
-			fighters[1].setActualMove(Move.PUNCH);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_3)
-		{
-			fighters[1].setActualMove(Move.BLOCK);
+			fighters[0].getSprite(fighters[0].getActualMove()).mirrorPolygons();
+			fighters[1].getSprite(fighters[1].getActualMove()).mirrorPolygons();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_P)
 		{
@@ -167,37 +123,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
-		if (e.getKeyCode() == KeyEvent.VK_LEFT)
+		if (Fighter.mKeyMoves1.containsKey(e.getKeyCode()))
 		{
-			fighters[0].setActualMove(Move.STANDARD);
+			pressed1 = false;
 		}
-		else if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+		else if (Fighter.mKeyMoves2.containsKey(e.getKeyCode()))
 		{
-			fighters[0].setActualMove(Move.STANDARD);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_UP)
-		{
-			fighters[0].setActualMove(Move.STANDARD);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_DOWN)
-		{
-			fighters[0].setActualMove(Move.STANDARD);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_A)
-		{
-			fighters[1].setActualMove(Move.STANDARD);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_D)
-		{
-			fighters[1].setActualMove(Move.STANDARD);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_W)
-		{
-			fighters[1].setActualMove(Move.STANDARD);
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_S)
-		{
-			fighters[1].setActualMove(Move.STANDARD);
+			pressed2 = false;
 		}
 	}
 
@@ -206,20 +138,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	{
 		while (true)
 		{
-			BufferedImage[] images1 = fighters[0].getSprite(fighters[0].getActualMove()).getImages();
-			Polygon[] polygons1 = fighters[0].getSprite(fighters[0].getActualMove()).getPolygons();
-			player1ImageIndex = (player1ImageIndex + 1) % images1.length;
-			fighters[0].setShownImage(images1[player1ImageIndex]);
-			fighters[0].setShownPolygon(polygons1[player1ImageIndex]);
-			BufferedImage[] images2 = fighters[1].getSprite(fighters[1].getActualMove()).getImages();
-			Polygon[] polygons2 = fighters[1].getSprite(fighters[1].getActualMove()).getPolygons();
-			player2ImageIndex = (player2ImageIndex + 1) % images2.length;
-			fighters[1].setShownImage(images2[player2ImageIndex]);
-			fighters[1].setShownPolygon(polygons2[player2ImageIndex]);
+			player1ImageIndex = fighters[0].move(pressed1, player1ImageIndex);
+			player2ImageIndex = fighters[1].move(pressed2, player2ImageIndex);
 			showImage = !CollisionDetector.isIntersected(fighters[0].getShownPolygon(), fighters[1].getShownPolygon());
 			try
 			{
-				Thread.sleep(50);
+				Thread.sleep(20);
 			}
 			catch (InterruptedException e)
 			{

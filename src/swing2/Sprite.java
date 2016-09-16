@@ -39,7 +39,7 @@ public class Sprite
 		polygons[index] = Image2Polygon.getContourPolygon(images[index], 0x00ffffff);
 		try
 		{
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(Settings.APP_ROOT + "generated_polygon\\" + id + "_" + index + ".ply")));
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(Settings.APP_ROOT + "generated_polygon" + "/" + id + "_" + index + ".ply")));
 			oos.writeObject(polygons[index]);
 			oos.flush();
 			oos.close();
@@ -56,7 +56,7 @@ public class Sprite
 		{
 			try
 			{
-				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(Settings.APP_ROOT + "generated_polygon\\" + id + "_" + index + ".ply")));
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(Settings.APP_ROOT + "generated_polygon" + "/" + id + "_" + index + ".ply")));
 				polygons[index] = (Polygon)ois.readObject();
 				ois.close();
 			}
@@ -69,7 +69,7 @@ public class Sprite
 		{
 			generateAndSavePolygon(index);
 		}
-		System.out.println(polygons[index].npoints);
+		System.out.println(polygons[index].npoints + "\t" + id);
 	}
 
 	public Polygon[] getPolygons()
@@ -80,5 +80,20 @@ public class Sprite
 	public BufferedImage[] getImages()
 	{
 		return images;
+	}
+	
+	public void mirrorPolygons()
+	{
+		for (Polygon polygon : polygons)
+		{
+			int[] xpoints = polygon.xpoints;
+			for (int i = 0; i < xpoints.length / 2; i++)
+			{
+				int temp = xpoints[i];
+				xpoints[i] = xpoints[xpoints.length - 1 - i];
+				xpoints[xpoints.length - 1 - i] = temp;
+			}
+			polygon.xpoints = xpoints;
+		}
 	}
 }
