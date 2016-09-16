@@ -15,7 +15,6 @@ public class Main
 			Settings.APP_ROOT = args[0] + "/";
 			System.out.println("Settings.APP_ROOT has been set to : " + Settings.APP_ROOT );
 		}
-//		final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
 		SwingUtilities.invokeLater(new Runnable()
 		{

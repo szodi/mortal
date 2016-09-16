@@ -200,11 +200,40 @@ public abstract class Fighter
 		this.shownImageIndex = shownImageIndex;
 	}
 	
-	public abstract void moveStandard();
-	public abstract void moveLeft();
-	public abstract void moveRight();
-	public abstract void moveJump();
-	public abstract void moveCrouch();
-	public abstract void hitPunch();
-	public abstract void hitKick();
+	public void moveStandard()
+	{
+		actualMove = Move.STANDARD;
+	}
+
+	public void moveLeft()
+	{
+		setHorizontalOffset(getHorizontalOffset() - getMovement());
+		actualMove = Move.WALK_LEFT;
+	}
+
+	public void moveRight()
+	{
+		setHorizontalOffset(getHorizontalOffset() + getMovement());
+		actualMove = Move.WALK_RIGHT;
+	}
+
+	public void moveJump()
+	{
+		actualMove = Move.JUMP;
+	}
+	
+	public void moveCrouch()
+	{
+		actualMove = Move.CROUCH;
+	}
+	
+	public void hitPunch()
+	{
+		setActualMove(Move.PUNCH);
+	}
+	
+	public void hitKick()
+	{
+		setActualMove(Move.KICK);
+	}
 }
