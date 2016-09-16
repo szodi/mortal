@@ -59,14 +59,14 @@ public class Szodi extends Fighter
 	@Override
 	public void moveJump()
 	{
-		setVerticalOffset(getVerticalOffset() - getMovement());
+//		setVerticalOffset(getVerticalOffset() - getMovement());
 		actualMove = Move.JUMP;
 	}
 
 	@Override
 	public void moveCrouch()
 	{
-		setVerticalOffset(getVerticalOffset() + getMovement());
+//		setVerticalOffset(getVerticalOffset() + getMovement());
 		actualMove = Move.CROUCH;
 	}
 
