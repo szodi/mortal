@@ -81,19 +81,4 @@ public class Sprite
 	{
 		return images;
 	}
-	
-	public void mirrorPolygons()
-	{
-		for (Polygon polygon : polygons)
-		{
-			int[] xpoints = polygon.xpoints;
-			for (int i = 0; i < xpoints.length / 2; i++)
-			{
-				int temp = xpoints[i];
-				xpoints[i] = xpoints[xpoints.length - 1 - i];
-				xpoints[xpoints.length - 1 - i] = temp;
-			}
-			polygon.xpoints = xpoints;
-		}
-	}
 }

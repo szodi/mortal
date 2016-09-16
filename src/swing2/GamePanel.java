@@ -104,11 +104,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 			pressed2 = true;
 			player2ImageIndex = 0;
 		}
-		else if (e.getKeyCode() == KeyEvent.VK_M)
-		{
-			fighters[0].getSprite(fighters[0].getActualMove()).mirrorPolygons();
-			fighters[1].getSprite(fighters[1].getActualMove()).mirrorPolygons();
-		}
 		if (e.getKeyCode() == KeyEvent.VK_P)
 		{
 			showPolyon = !showPolyon;
