@@ -21,6 +21,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	boolean showPolyon = true;
 	boolean showImage = true;
 
+	int player1ImageIndex = 0;
+	int player2ImageIndex = 0;
+
 	public GamePanel()
 	{
 		fighters = new Fighter[2];
@@ -106,7 +109,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_DOWN && fighters[0].getVerticalOffset() < 1000)
 		{
-			fighters[0].setVerticalOffset(fighters[0].getVerticalOffset() + fighters[0].getMovement());
+			fighters[0].setActualMove(Move.CROUCH);
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_7)
+		{
+			fighters[0].setActualMove(Move.BLOCK);
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_8)
 		{
@@ -132,7 +139,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_S && fighters[1].getVerticalOffset() < 1000)
 		{
-			fighters[1].setVerticalOffset(fighters[1].getVerticalOffset() + fighters[1].getMovement());
+			fighters[1].setActualMove(Move.CROUCH);
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_1)
 		{
@@ -141,6 +148,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		else if (e.getKeyCode() == KeyEvent.VK_2)
 		{
 			fighters[1].setActualMove(Move.PUNCH);
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_3)
+		{
+			fighters[1].setActualMove(Move.BLOCK);
 		}
 		if (e.getKeyCode() == KeyEvent.VK_P)
 		{
@@ -193,8 +204,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	@Override
 	public void run()
 	{
-		int player1ImageIndex = 0;
-		int player2ImageIndex = 0;
 		while (true)
 		{
 			BufferedImage[] images1 = fighters[0].getSprite(fighters[0].getActualMove()).getImages();

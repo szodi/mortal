@@ -8,7 +8,7 @@ public class Misi extends Fighter
 {
 	BufferedImage[] standard = AnimGifHandler.getFrames(Misi.class.getResourceAsStream("/images/misi/alapallas.gif"));
 	BufferedImage[] block = AnimGifHandler.getFrames(Misi.class.getResourceAsStream("/images/misi/vedekezes.gif"));
-//	BufferedImage[] punch_up = AnimGifHandler.getFrames(Misi.class.getResourceAsStream("/images/misi/felutes.gif"));
+	BufferedImage[] punch_up = AnimGifHandler.getFrames(Misi.class.getResourceAsStream("/images/misi/felutes.gif"));
 	BufferedImage[] crouch_and_block = AnimGifHandler.getFrames(Misi.class.getResourceAsStream("/images/misi/gugolases-vedekezes.gif"));
 //	BufferedImage[] win = AnimGifHandler.getFrames(Misi.class.getResourceAsStream("/images/misi/gyozelem.gif"));
 	BufferedImage[] turn_back = AnimGifHandler.getFrames(Misi.class.getResourceAsStream("/images/misi/megfordulas.gif"));
@@ -23,7 +23,7 @@ public class Misi extends Fighter
 	{
 		mMoves.put(Move.STANDARD, new Sprite("MISI_STANDARD", standard));
 		mMoves.put(Move.BLOCK, new Sprite("MISI_BLOCK", block));
-//		mMoves.put(Move.PUNCH_UP, new Sprite("MISI_PUNCH_UP", punch_up));
+		mMoves.put(Move.PUNCH_UP, new Sprite("MISI_PUNCH_UP", punch_up));
 		mMoves.put(Move.CROUCH_AND_BLOCK, new Sprite("MISI_CROUCH_AND_BLOCK", crouch_and_block));
 //		mMoves.put(Move.WIN, new Sprite("MISI_WIN", win));
 		mMoves.put(Move.TURN_BACK, new Sprite("MISI_TURN_BACK", turn_back));
