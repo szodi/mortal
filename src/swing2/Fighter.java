@@ -1,12 +1,33 @@
 package swing2;
 
 import java.awt.Polygon;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Fighter
 {
+	public static Map<Integer, Move> mKeyMoves1 = new HashMap<>();
+	public static Map<Integer, Move> mKeyMoves2 = new HashMap<>();
+
+	static 
+	{
+		mKeyMoves1.put(KeyEvent.VK_W, Move.JUMP);
+		mKeyMoves1.put(KeyEvent.VK_S, Move.CROUCH);
+		mKeyMoves1.put(KeyEvent.VK_A, Move.WALK);
+		mKeyMoves1.put(KeyEvent.VK_D, Move.WALK);
+		mKeyMoves1.put(KeyEvent.VK_1, Move.PUNCH);
+		mKeyMoves1.put(KeyEvent.VK_2, Move.KICK);
+
+		mKeyMoves2.put(KeyEvent.VK_UP, Move.JUMP);
+		mKeyMoves2.put(KeyEvent.VK_DOWN, Move.CROUCH);
+		mKeyMoves2.put(KeyEvent.VK_LEFT, Move.WALK);
+		mKeyMoves2.put(KeyEvent.VK_RIGHT, Move.WALK);
+		mKeyMoves2.put(KeyEvent.VK_INSERT, Move.PUNCH);
+		mKeyMoves2.put(KeyEvent.VK_END, Move.KICK);
+	}
+	
 	Map<Move, Sprite> mMoves = new HashMap<>();
 
 	int horizontalOffset = 0;
@@ -19,7 +40,22 @@ public abstract class Fighter
 	int shownImageIndex;
 
 	Move actualMove = Move.STANDARD;
+	
+	boolean isPlayer1 = true;
+	boolean isOnLeft = false;
 
+	public void doMove(Move move)
+	{
+		if (move == Move.CROUCH)
+		{
+			moveCrouch();
+		}
+		else if (move == Move.STANDARD)
+		{
+			moveStandard();
+		}
+	}
+	
 	public Sprite getSprite(Move move)
 	{
 		return mMoves.get(move);
@@ -89,7 +125,7 @@ public abstract class Fighter
 		return pShownPolygon;
 	}
 
-	public void setshownPolygon(Polygon shownPolygon)
+	public void setShownPolygon(Polygon shownPolygon)
 	{
 		this.pShownPolygon = shownPolygon;
 	}
@@ -113,4 +149,12 @@ public abstract class Fighter
 	{
 		this.shownImageIndex = shownImageIndex;
 	}
+	
+	public abstract void moveStandard();
+	public abstract void moveLeft();
+	public abstract void moveRight();
+	public abstract void moveJump();
+	public abstract void moveCrouch();
+	public abstract void hitPunch();
+	public abstract void hitKick();
 }
