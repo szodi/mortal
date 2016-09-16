@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		fighters[0] = new Misi();
 		fighters[0].setVerticalOffset(450);
 		fighters[0].setHorizontalOffset(600);
-		fighters[1] = new Mate();
+		fighters[1] = new Szodi();
 		fighters[1].setVerticalOffset(450);
 		fighters[1].setHorizontalOffset(400);
 		new Thread(this).start();
@@ -93,6 +93,17 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		if (Fighter.mKeyMoves1.containsKey(e.getKeyCode()) && Fighter.mKeyMoves1.get(e.getKeyCode()) != fighters[0].getActualMove())
 		{
 			Move move = Fighter.mKeyMoves1.get(e.getKeyCode());
+			if (fighters[0].getActualMove() == Move.CROUCH)
+			{
+				if (move == Move.PUNCH)
+				{
+					move = Move.PUNCH_UP;
+				}
+				else if (move == Move.BLOCK)
+				{
+					move = Move.CROUCH_AND_BLOCK;
+				}
+			}
 			fighters[0].doMove(move);
 			pressed1 = true;
 			player1ImageIndex = 0;
@@ -100,6 +111,17 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		else if (Fighter.mKeyMoves2.containsKey(e.getKeyCode()) && Fighter.mKeyMoves2.get(e.getKeyCode()) != fighters[1].getActualMove())
 		{
 			Move move = Fighter.mKeyMoves2.get(e.getKeyCode());
+			if (fighters[1].getActualMove() == Move.CROUCH)
+			{
+				if (move == Move.PUNCH)
+				{
+					move = Move.PUNCH_UP;
+				}
+				else if (move == Move.BLOCK)
+				{
+					move = Move.CROUCH_AND_BLOCK;
+				}
+			}
 			fighters[1].doMove(move);
 			pressed2 = true;
 			player2ImageIndex = 0;
@@ -133,8 +155,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	{
 		while (true)
 		{
-			player1ImageIndex = fighters[0].move(pressed1, player1ImageIndex);
-			player2ImageIndex = fighters[1].move(pressed2, player2ImageIndex);
+			player1ImageIndex = fighters[0].getImageIndex(pressed1, player1ImageIndex);
+			player2ImageIndex = fighters[1].getImageIndex(pressed2, player2ImageIndex);
 			showImage = !CollisionDetector.isIntersected(fighters[0].getShownPolygon(), fighters[1].getShownPolygon());
 			try
 			{

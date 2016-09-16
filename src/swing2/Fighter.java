@@ -48,33 +48,25 @@ public abstract class Fighter
 
 	public void doMove(Move move)
 	{
-		if (move == Move.CROUCH)
+		if(actualMove == Move.CROUCH)
 		{
-			moveCrouch();
+			if(move == Move.PUNCH)
+			{
+				move = Move.PUNCH_UP;
+			}
+			else if ( move == Move.BLOCK)
+			{
+				move = Move.CROUCH_AND_BLOCK;
+			}
 		}
-		else if (move == Move.STANDARD)
+		actualMove = move;
+		if (move == Move.WALK_LEFT)
 		{
-			moveStandard();
-		}
-		else if (move == Move.JUMP)
-		{
-			moveJump();
-		}
-		else if (move == Move.WALK_LEFT)
-		{
-			moveLeft();
+			setHorizontalOffset(getHorizontalOffset() - getMovement());
 		}
 		else if (move == Move.WALK_RIGHT)
 		{
-			moveRight();
-		}
-		else if (move == Move.PUNCH)
-		{
-			hitPunch();
-		}
-		else if (move == Move.KICK)
-		{
-			hitKick();
+			setHorizontalOffset(getHorizontalOffset() + getMovement());
 		}
 	}
 	
@@ -122,13 +114,17 @@ public abstract class Fighter
 		}
 	}
 
-	public int move(boolean buttonPressed, int playerImageIndex)
+	public int getImageIndex(boolean buttonPressed, int playerImageIndex)
 	{
-		BufferedImage[] images1 = mMoves.get(actualMove).getImages();
-		Polygon[] polygons1 = mMoves.get(actualMove).getPolygons();
+		BufferedImage[] images = mMoves.get(actualMove).getImages();
+		Polygon[] polygons = mMoves.get(actualMove).getPolygons();
+		if (actualMove == Move.WALK_LEFT || actualMove == Move.WALK_RIGHT)
+		{
+			
+		}
 		if (actualMove != Move.STANDARD)
 		{
-			if(buttonPressed && playerImageIndex < images1.length - 1)
+			if(buttonPressed && playerImageIndex < images.length - 1)
 			{
 				playerImageIndex++;
 			}
@@ -143,10 +139,10 @@ public abstract class Fighter
 		}
 		else
 		{
-			playerImageIndex = (playerImageIndex + 1) % images1.length;
+			playerImageIndex = (playerImageIndex + 1) % images.length;
 		}
-		biShownImage = images1[playerImageIndex];
-		pShownPolygon = polygons1[playerImageIndex];
+		biShownImage = images[playerImageIndex];
+		pShownPolygon = polygons[playerImageIndex];
 		return playerImageIndex;
 	}
 	
@@ -198,42 +194,5 @@ public abstract class Fighter
 	public void setShownImageIndex(int shownImageIndex)
 	{
 		this.shownImageIndex = shownImageIndex;
-	}
-	
-	public void moveStandard()
-	{
-		actualMove = Move.STANDARD;
-	}
-
-	public void moveLeft()
-	{
-		setHorizontalOffset(getHorizontalOffset() - getMovement());
-		actualMove = Move.WALK_LEFT;
-	}
-
-	public void moveRight()
-	{
-		setHorizontalOffset(getHorizontalOffset() + getMovement());
-		actualMove = Move.WALK_RIGHT;
-	}
-
-	public void moveJump()
-	{
-		actualMove = Move.JUMP;
-	}
-	
-	public void moveCrouch()
-	{
-		actualMove = Move.CROUCH;
-	}
-	
-	public void hitPunch()
-	{
-		setActualMove(Move.PUNCH);
-	}
-	
-	public void hitKick()
-	{
-		setActualMove(Move.KICK);
 	}
 }
