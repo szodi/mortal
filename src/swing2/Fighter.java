@@ -118,11 +118,35 @@ public abstract class Fighter
 	{
 		BufferedImage[] images = mMoves.get(actualMove).getImages();
 		Polygon[] polygons = mMoves.get(actualMove).getPolygons();
-		if (actualMove == Move.WALK_LEFT || actualMove == Move.WALK_RIGHT)
+		if (actualMove == Move.WALK_LEFT)
 		{
-			
+			if(buttonPressed)
+			{
+				playerImageIndex = (playerImageIndex + images.length - 1) % images.length;
+			}
+			else
+			{
+				playerImageIndex = 0;
+				actualMove = Move.STANDARD;
+			}
 		}
-		if (actualMove != Move.STANDARD)
+		else if (actualMove == Move.WALK_RIGHT)
+		{
+			if(buttonPressed)
+			{
+				playerImageIndex = (playerImageIndex + 1) % images.length;
+			}
+			else
+			{
+				playerImageIndex = 0;
+				actualMove = Move.STANDARD;
+			}
+		}
+		else if (actualMove == Move.GOT_PUNCH)
+		{
+			playerImageIndex = (playerImageIndex + 1) % images.length;
+		}
+		else if (actualMove != Move.STANDARD)
 		{
 			if(buttonPressed && playerImageIndex < images.length - 1)
 			{
