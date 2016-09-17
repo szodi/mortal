@@ -38,10 +38,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	{
 		fighters[0] = new Imi();
 		fighters[0].setVerticalOffset(450);
-		fighters[0].setHorizontalOffset(600);
-		fighters[1] = new Mate();
+		fighters[0].setHorizontalOffset(400);
+		fighters[1] = new Misi();
 		fighters[1].setVerticalOffset(450);
-		fighters[1].setHorizontalOffset(400);
+		fighters[1].setHorizontalOffset(600);
+		fighters[1].setMirrored(true);
 		MusicPlayer.start(new File(Settings.APP_ROOT + "sounds/06-lee-groves-carmageddon-ost-desert.wav"));
 		new Thread(this).start();
 	}

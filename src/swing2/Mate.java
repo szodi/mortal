@@ -9,7 +9,8 @@ public class Mate extends Fighter
 		String playerName = "Mate";
 		for (Move move : Move.values())
 		{
-			mMoves.put(move, new Sprite(playerName.toUpperCase() + "_" + move.toString(), AnimGifHandler.getFrames(Misi.class.getResourceAsStream("/images/" + playerName.toLowerCase() + "/" + move.toString() + ".gif"))));
+			mMovesNonMirrored.put(move, new Sprite(playerName.toUpperCase() + "_" + move.toString(), AnimGifHandler.getFrames(Mate.class.getResourceAsStream("/images/" + playerName.toLowerCase() + "/" + move.toString() + ".gif"))));
+			mMovesMirrored.put(move, new Sprite(playerName.toUpperCase() + "_F_" + move.toString(), AnimGifHandler.getFrames(Mate.class.getResourceAsStream("/images/" + playerName.toLowerCase() + "/" + move.toString() + "_F.gif"))));
 		}
 	}
 }

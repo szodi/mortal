@@ -30,7 +30,9 @@ public abstract class Fighter
 		mKeyMoves2.put(KeyEvent.VK_7, Move.BLOCK);
 	}
 	
-	Map<Move, Sprite> mMoves = new HashMap<>();
+	Map<Move, Sprite> mMovesMirrored = new HashMap<>();
+	Map<Move, Sprite> mMovesNonMirrored = new HashMap<>();
+	Map<Move, Sprite> mMoves = mMovesNonMirrored;
 
 	int horizontalOffset = 0;
 	int verticalOffset = 0;
@@ -45,6 +47,26 @@ public abstract class Fighter
 	
 	boolean isPlayer1 = true;
 	boolean isOnLeft = false;
+	
+	boolean mirrored = false;
+
+	public boolean isMirrored()
+	{
+		return mirrored;
+	}
+
+	public void setMirrored(boolean mirrored)
+	{
+		this.mirrored = mirrored;
+		if(mirrored)
+		{
+			mMoves = mMovesMirrored;
+		}
+		else
+		{
+			mMoves = mMovesNonMirrored;
+		}
+	}
 
 	public void doMove(Move move)
 	{
